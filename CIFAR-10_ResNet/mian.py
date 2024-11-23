@@ -1,24 +1,33 @@
+import signal
+
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from lenet5 import LeNet5
 from ResNet import ResNet18
 
+def handler(signum, frame):
+    print("SIGINT received. Cleaning up...")
+    exit(0)
+
+# 设置自定义信号处理器
+signal.signal(signal.SIGINT, handler)
+
 def main():
     # 检查 GPU 是否可用
     print("CUDA available:", torch.cuda.is_available())
 
     # 创建一个张量并分配到 GPU
-    tensor = torch.randn(1000, 1000, device="cuda")
-    print("Allocated memory (bytes):", torch.cuda.memory_allocated())
+    # tensor = torch.randn(1000, 1000, device="cuda")
+    # print("Allocated memory (bytes):", torch.cuda.memory_allocated())
 
     # 查看显存使用情况
     print("Reserved memory (bytes):", torch.cuda.memory_reserved())
     # 获取当前设备
-    print("Current device:", torch.cuda.current_device())
+    # print("Current device:", torch.cuda.current_device())
 
     # 显示 GPU 的名称
-    print("Device name:", torch.cuda.get_device_name(torch.cuda.current_device()))
+    # print("Device name:", torch.cuda.get_device_name(torch.cuda.current_device()))
     print(torch.__version__)  # PyTorch 版本
     print(torch.version.cuda) # PyTorch 使用的 CUDA 版本
 
