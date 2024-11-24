@@ -30,7 +30,7 @@ class Net(nn.Module):
         out = out.unsqueeze(dim=0)  # [1, batch*seq_len, output_size]
         return out, hidden_prev
 
-
+#
 def train_RNN():
     model = Net()
     print("model:\n", model)
