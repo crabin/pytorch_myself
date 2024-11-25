@@ -30,6 +30,7 @@ class Net(nn.Module):
         out = out.unsqueeze(dim=0)  # [1, batch*seq_len, output_size]
         return out, hidden_prev
 
+
 #
 def train_RNN():
     model = Net()
@@ -54,6 +55,9 @@ def train_RNN():
         loss = criterion(output, y)
         model.zero_grad()
         loss.backward()
+        for p in model.parameters():
+            print(p.grad.norm())
+            torch.nn.utils.clip_grad_norm_(p, 10)
         optimizer.step()
 
         if i % 100 == 0:
@@ -66,12 +70,8 @@ def train_RNN():
     plt.savefig('RNN_loss.png')
     return hidden_prev, model
 
+
 hidden_prev, model = train_RNN()
-
-for p in model.parameters():
-    print(p.grad.norm())
-    torch.nn.utils.clip_grad_norm_(p, 10)
-
 
 start = np.random.randint(3, size=1)[0]
 time_steps = np.linspace(start, start + 10, num_time_steps)
@@ -95,4 +95,3 @@ plt.plot(time_steps[:-1], x.squeeze())
 plt.scatter(time_steps[1:], prediction)
 plt.savefig('RNN_prev.png')
 plt.show()
-

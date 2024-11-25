@@ -1,4 +1,3 @@
-
 from collections import OrderedDict
 import numpy as np
 import torchvision.datasets as dsets
@@ -140,11 +139,11 @@ class TowLayerNet:
         self.params = {}
         # 输入层和隐层之间的权重
         self.params['W1'] = weight_init_std * \
-            np.random.randn(input_size, hidden_size)
+                            np.random.randn(input_size, hidden_size)
         self.params['b1'] = np.zeros(hidden_size)
         # 隐层和输出层之间的权重
         self.params['W2'] = weight_init_std * \
-            np.random.randn(hidden_size, output_size)
+                            np.random.randn(hidden_size, output_size)
         self.params['b2'] = np.zeros(output_size)
 
         # 生成层
@@ -210,7 +209,6 @@ y_test_tmp = test_datasets.test_labels.reshape(
 # 转换为one-hot 编码
 y_test = torch.zeros(y_test_tmp.shape[0], 10).scatter_(
     1, y_test_tmp, 1).numpy()
-
 
 train_size = x_train.shape[0]
 iters_num = 600
